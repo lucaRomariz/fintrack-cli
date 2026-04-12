@@ -15,7 +15,6 @@ from fintrack import __version__
 from fintrack.charts import plot_by_category, plot_monthly_evolution, plot_summary
 from fintrack.manager import FinancialManager
 
-
 # ──────────────────────────────────────────────────────────────
 # Handlers: uma função por subcomando
 # Cada handler recebe os args parseados e o manager já instanciado.
@@ -65,7 +64,10 @@ def cmd_list(args: argparse.Namespace, manager: FinancialManager) -> int:
         return 0
 
     # Cabeçalho da tabela
-    print(f"\n{'#':<4} {'Tipo':<10} {'Valor':>12}  {'Categoria':<16} {'Data':<20}  Descrição")
+    print(
+        f"\n{'#':<4} {'Tipo':<10} {'Valor':>12}"
+        f"  {'Categoria':<16} {'Data':<20}  Descrição"
+    )
     print("─" * 75)
     for i, t in enumerate(filtered, 1):
         print(

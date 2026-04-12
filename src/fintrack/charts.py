@@ -100,8 +100,12 @@ def plot_monthly_evolution(
     despesas = [monthly[m]["despesa"] for m in meses]
 
     fig, ax = plt.subplots(figsize=(9, 5))
-    ax.plot(meses, receitas, marker="o", color="#2ecc71", linewidth=2.5, label="Receitas")
-    ax.plot(meses, despesas, marker="s", color="#e74c3c", linewidth=2.5, label="Despesas")
+    ax.plot(
+        meses, receitas, marker="o", color="#2ecc71", linewidth=2.5, label="Receitas"
+    )
+    ax.plot(
+        meses, despesas, marker="s", color="#e74c3c", linewidth=2.5, label="Despesas"
+    )
     ax.fill_between(meses, receitas, despesas, alpha=0.1, color="#3498db")
 
     ax.set_title("Evolução Mensal", fontsize=15, fontweight="bold", pad=15)

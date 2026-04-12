@@ -21,7 +21,9 @@ def manager(tmp_path):
 
 def test_add_despesa_retorna_dict_correto(manager):
     """Uma despesa válida deve retornar dicionário com todos os campos."""
-    t = manager.add(tipo="despesa", valor=150.0, categoria="alimentacao", descricao="mercado")
+    t = manager.add(
+        tipo="despesa", valor=150.0, categoria="alimentacao", descricao="mercado"
+    )
     assert t["tipo"] == "despesa"
     assert t["valor"] == 150.0
     assert t["categoria"] == "alimentacao"
