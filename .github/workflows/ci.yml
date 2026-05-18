@@ -6,9 +6,9 @@ on:
       - main
       - entrega-intermediaria
 
-pull_request:
-  branches:
-    - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   tests:
