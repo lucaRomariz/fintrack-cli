@@ -10,6 +10,7 @@ Estrutura com subcomandos (igual ao git):
 import argparse
 import sys
 from pathlib import Path
+from fintrack.cotacao_service import obter_cotacao_dolar
 
 from fintrack import __version__
 from fintrack.charts import plot_by_category, plot_monthly_evolution, plot_summary
@@ -113,6 +114,21 @@ def cmd_chart(args: argparse.Namespace, manager: FinancialManager) -> int:
         return 1
     return 0
 
+def cmd_cotacao(_args: argparse.Namespace, _manager: FinancialManager) -> int:
+    """Exibe a cotação atual do dólar."""
+
+    cotacao = obter_cotacao_dolar()
+
+    if cotacao:
+        print(
+            "\n💵 COTAÇÃO DO DÓLAR\n"
+            "═══════════════════════\n"
+            f"USD → BRL = R$ {cotacao:.2f}\n"
+        )
+        return 0
+
+    print("Não foi possível obter a cotação.")
+    return 1
 
 # ──────────────────────────────────────────────────────────────
 # Construção do parser de argumentos
@@ -164,6 +180,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Salvar gráfico em arquivo PNG (ex: grafico.png)"
     )
 
+    # ── cotacao ──────────────────────────────────────────────
+    sub.add_parser("cotacao", help="Exibir cotação atual do dólar")
+    
     return parser
 
 
@@ -182,6 +201,7 @@ def main() -> None:
         "listar": cmd_list,
         "resumo": cmd_summary,
         "grafico": cmd_chart,
+        "cotacao": cmd_cotacao,
     }
 
     sys.exit(handlers[args.comando](args, manager))
