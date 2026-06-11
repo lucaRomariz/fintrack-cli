@@ -30,6 +30,61 @@ Os dados são armazenados localmente em `~/.fintrack/data.json`, sem dependênci
 
 ---
 
+## Nova funcionalidade — Cotação em tempo real
+
+O sistema agora possui integração com API pública utilizando a AwesomeAPI.
+
+### 🎯 Objetivo
+A partir de agora, o FinTrack CLI permite consultar a cotação do dólar (USD) em relação ao Real (BRL) em tempo real.
+
+### 🔌 API Utilizada
+- **AwesomeAPI**
+- Endpoint: `https://economia.awesomeapi.com.br/last/USD-BRL`
+- Método: `GET`
+
+### 🛠️ Como funciona
+
+Ao executar o comando:
+
+```bash
+fintrack cotacao
+```
+
+O sistema:
+
+1. Envia uma requisição GET para a AwesomeAPI
+2. Recebe os dados da cotação em formato JSON
+3. Extrai o valor atual do dólar
+4. Exibe a cotação formatada para o usuário
+
+### 📝 Exemplo de uso
+
+```bash
+fintrack cotacao
+```
+
+### 📊 Exemplo de saída
+
+```
+╔══════════════════════════════╗
+║    COTAÇÃO DO DÓLAR (USD/BRL)  ║
+╠══════════════════════════════╣
+║  Data da cotação: 2023-10-27   ║
+║  Valor atual:     R$ 5,05      ║
+╚══════════════════════════════╝
+```
+
+### 📁 Implementação
+
+- Arquivo: [`cotacao_service.py`](fintrack/cotacao_service.py)
+- Responsável por fazer a requisição HTTP e tratar a resposta
+
+### 🧪 Testes
+
+```bash
+pytest tests/test_cotacao_service.py
+```
+
 ## 👥 Público-Alvo
 
 - Estudantes universitários que precisam controlar mesada e gastos mensais
@@ -47,6 +102,7 @@ Os dados são armazenados localmente em `~/.fintrack/data.json`, sem dependênci
 | `fintrack listar` | Listar transações (com filtro opcional) |
 | `fintrack resumo` | Exibir total de receitas, despesas e saldo |
 | `fintrack grafico` | Gerar gráfico: barras, pizza ou linha |
+| `fintrack cotacao` | Exibir cotação do dólar |
 
 **Tipos de gráfico disponíveis:**
 - `resumo` — Barras comparando receitas × despesas com saldo destacado
@@ -64,6 +120,7 @@ Os dados são armazenados localmente em `~/.fintrack/data.json`, sem dependênci
 | argparse | stdlib | Interface de linha de comando |
 | pytest | ≥ 8.0 | Testes automatizados |
 | ruff | ≥ 0.4 | Linting e análise estática |
+| requests | ≥ 2.31 | Requisições HTTP para API de cotação |
 | GitHub Actions | — | Integração contínua (CI) |
 
 Armazenamento: **JSON local** em `~/.fintrack/data.json`
@@ -133,6 +190,9 @@ fintrack grafico --grafico mensal
 
 # Salvar gráfico como PNG
 fintrack grafico --grafico resumo --output grafico.png
+
+# Exibir cotação do dólar
+fintrack cotacao
 ```
 
 ### Exemplo de saída do `resumo`
@@ -204,7 +264,8 @@ fintrack-cli/
 │       ├── main.py          # Interface CLI (argparse)
 │       ├── manager.py       # Regras de negócio
 │       ├── storage.py       # Persistência em JSON
-│       └── charts.py        # Gráficos com matplotlib
+│       ├── charts.py        # Gráficos com matplotlib
+│       └── cotacao_service.py # Serviço de cotação do dólar
 ├── tests/
 │   ├── test_manager.py      # 15 testes de lógica
 │   └── test_storage.py      # 5 testes de persistência

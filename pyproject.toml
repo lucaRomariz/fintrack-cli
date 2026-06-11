@@ -8,10 +8,16 @@ version = "1.0.0"
 description = "Gestor de gastos pessoais com geração de gráficos via CLI"
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "Luca Romariz", email = "luca.romariz@icloud.com" }]
+
+authors = [
+    { name = "Luca Romariz", email = "luca.romariz@icloud.com" }
+]
+
 requires-python = ">=3.11"
+
 dependencies = [
     "matplotlib>=3.8",
+    "requests>=2.32"
 ]
 
 [project.scripts]
@@ -35,5 +41,8 @@ select = ["E", "F", "W", "I"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["fintrack"]
+
+[tool.setuptools.package-dir]
+"" = "src"
