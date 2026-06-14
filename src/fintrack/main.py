@@ -15,6 +15,7 @@ from fintrack.cotacao_service import obter_cotacao_dolar
 from fintrack import __version__
 from fintrack.charts import plot_by_category, plot_monthly_evolution, plot_summary
 from fintrack.manager import FinancialManager
+from fintrack.sync_service import sync_transactions
 
 # ──────────────────────────────────────────────────────────────
 # Handlers: uma função por subcomando
@@ -130,6 +131,18 @@ def cmd_cotacao(_args: argparse.Namespace, _manager: FinancialManager) -> int:
     print("Não foi possível obter a cotação.")
     return 1
 
+def cmd_sync(_args, _manager):
+
+    total = sync_transactions()
+
+    print(
+        "\n☁️ SINCRONIZAÇÃO CONCLUÍDA\n"
+        "════════════════════════════\n"
+        f"{total} transações enviadas para o Supabase.\n"
+    )
+
+    return 0
+
 # ──────────────────────────────────────────────────────────────
 # Construção do parser de argumentos
 # ──────────────────────────────────────────────────────────────
@@ -182,6 +195,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     # ── cotacao ──────────────────────────────────────────────
     sub.add_parser("cotacao", help="Exibir cotação atual do dólar")
+
+    # ── sync ─────────────────────────────────────────────────
+    sub.add_parser(
+        "sync",
+        help="Sincronizar dados com o banco Supabase"
+    )
     
     return parser
 
@@ -202,6 +221,7 @@ def main() -> None:
         "resumo": cmd_summary,
         "grafico": cmd_chart,
         "cotacao": cmd_cotacao,
+        "sync": cmd_sync
     }
 
     sys.exit(handlers[args.comando](args, manager))
