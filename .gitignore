@@ -5,13 +5,14 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-.test_db.py
-.test_connection.py
+tests/test_connection.py
+tests/test_db.py
 
 # Ambientes virtuais
 .venv/
 venv/
 env/
+.env
 
 # Ferramentas
 .pytest_cache/
