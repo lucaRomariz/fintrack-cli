@@ -17,7 +17,9 @@ requires-python = ">=3.11"
 
 dependencies = [
     "matplotlib>=3.8",
-    "requests>=2.32"
+    "requests>=2.32",
+    "psycopg2-binary>=2.9",
+    "python-dotenv>=1.0"
 ]
 
 [project.scripts]
